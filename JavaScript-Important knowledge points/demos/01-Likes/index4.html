@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Likes</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/pure/2.0.6/pure.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/iconfont.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="content"></div>
+   
+</body>
+<script>
+  const createButton= str => {
+    //创建这个函数，可以动态传入对应的模板字符串
+      let div = document.createElement('div');
+      div.innerHTML = str;
+      return div;
+  }
+  class MyBtn {
+
+    constructor() {
+        this.state= {flag: false};
+    }
+
+    setBtnState(state){
+        let oldEl = this.el;
+        this.state=state;
+        this.el = this.render();
+        if(this.onStateChange) this.onStateChange(oldEl,this.el)
+    }
+
+    changeText() {
+        // const txt = document.querySelector('.like')
+        // this.state.flag = ! this.state.flag;
+        // console.log(this);
+        // this.state.flag?txt.innerHTML='取消':txt.innerHTML='赞'
+    this.setBtnState(
+            {
+                flag:!this.state.flag
+            }
+        )
+        // console.log(this.state.flag);
+    }
+    render() {
+      this.el = createButton(`
+      <a class="pure-button">
+                 <i class="iconfont icon-dianzan"></i>
+                 <span class="like">${this.state.flag?'取消':'赞'}</span>
+            </a>
+      `)
+      this.el.addEventListener('click',this.changeText.bind(this),false) //changeText里面本身还有一个this,如果这里直接调用this.changeText,类里面的那个this就会丢失，state也就找不到了
+     console.log(this.state.flag);
+      return this.el;
+    }
+  }
+  let btn = new MyBtn();
+  const content = document.querySelector('.content');
+  btn.onStateChange = (oEL,nEl) => {
+   
+   content.insertBefore(nEl,oEL) //状态改变，就删除旧的节点，插入新的节点
+   content.removeChild(oEL)
+}
+  content.appendChild(btn.render());
+
+
+</script>
+
+</html>

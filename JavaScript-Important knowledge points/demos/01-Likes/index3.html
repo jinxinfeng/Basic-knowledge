@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Likes</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/pure/2.0.6/pure.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/iconfont.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="content"></div>
+   
+</body>
+<script>
+  const createButton= str => {
+    //创建这个函数，可以动态传入对应的模板字符串
+      let div = document.createElement('div');
+      div.innerHTML = str;
+      return div;
+  }
+  class MyBtn {
+
+    constructor() {
+        this.state= {flag: false};
+    }
+
+    changeText() {
+        const txt = document.querySelector('.like')
+        this.state.flag = ! this.state.flag;
+        console.log(this);
+        this.state.flag?txt.innerHTML='取消':txt.innerHTML='赞'
+    }
+    render() {
+      this.el = createButton(`
+      <a class="pure-button">
+                 <i class="iconfont icon-dianzan"></i>
+                 <span class="like">赞</span>
+            </a>
+      `)
+      this.el.addEventListener('click',this.changeText.bind(this),false) //changeText里面本身还有一个this,如果这里直接调用this.changeText,类里面的那个this就会丢失，state也就找不到了
+      return this.el;
+    }
+  }
+  let btn = new MyBtn();
+  const content = document.querySelector('.content');
+  content.appendChild(btn.render());
+  
+</script>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Likes</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/pure/2.0.6/pure.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/iconfont.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="content">
+        <!-- <a class="pure-button">
+            <i class="iconfont icon-dianzan"></i>
+            <span class="like">赞</span>
+        </a> -->
+    </div>
+   
+</body>
+<script>
+    class MyBtn {
+        renderByString(str) {
+            //直接返回对应的字符串
+            return `
+            <a class="pure-button">
+                 <i class="iconfont icon-dianzan"></i>
+                 <span class="like">${str}</span>
+            </a>
+            
+            `
+        }
+    }
+    const content = document.querySelector('.content');
+    console.log(content);
+    const btn = new MyBtn();
+    let flag = false;
+    
+    content.innerHTML = btn.renderByString('赞')
+    content.addEventListener('click',()=>{
+        console.log(content.innerHTML);
+        flag = !flag;
+        flag?content.innerHTML=btn.renderByString('取消'):content.innerHTML=btn.renderByString('赞');
+    },false)
+
+  
+</script>
+
+</html>
